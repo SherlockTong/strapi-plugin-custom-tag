@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "custom_tags",
+  "info": {
+    "singularName": "custom-tag",
+    "pluralName": "custom-tags",
+    "displayName": "Custom Tag"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "color": {
+      "type": "customField",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+      "customField": "plugin::color-picker.color"
+    }
+  }
+}

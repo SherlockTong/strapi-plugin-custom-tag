@@ -1,0 +1,55 @@
+{
+  "name": "strapi-plugin-custom-tag",
+  "version": "1.0.0",
+  "description": "A Strapi plugin that enables a flexible and efficient tagging system for your content.",
+  "license": "MIT",
+  "keywords": [
+    "strapi",
+    "strapi plugin",
+    "custom",
+    "tag",
+    "custom tag",
+    "custom-tag",
+    "strapi-plugin-custom-tag"
+  ],
+  "author": {
+    "name": "Wilson Fu"
+  },
+  "maintainers": [
+    {
+      "name": "Wilson Fu"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SherlockTong/strapi-plugin-custom-tag.git"
+  },
+  "dependencies": {
+    "@strapi/design-system": "^1.6.3",
+    "@strapi/helper-plugin": "^4.6.0",
+    "@strapi/icons": "^1.6.3",
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^5.3.4",
+    "styled-components": "^5.3.6"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "name": "custom-tag",
+    "description": "A Strapi plugin that enables a flexible and efficient tagging system for your content.",
+    "kind": "plugin",
+    "displayName": "Custom Tag"
+  }
+}
