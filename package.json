@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-custom-tag",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Strapi plugin that enables a flexible and efficient tagging system for your content.",
   "license": "MIT",
   "keywords": [
