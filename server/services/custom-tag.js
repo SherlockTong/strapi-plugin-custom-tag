@@ -1,6 +1,7 @@
 "use strict";
 
 const plugin = "plugin::custom-tag.custom-tag";
+const fields = ["id", "name", "textColor", "bgColor"];
 module.exports = ({ strapi }) => ({
   async findList(request) {
     const { name } = request.query;
@@ -12,7 +13,7 @@ module.exports = ({ strapi }) => ({
     };
 
     return await strapi.entityService.findMany(plugin, {
-      fields: ["id", "name", "color"],
+      fields: fields,
       filters,
       sort: { publishedAt: "desc" },
     });
@@ -21,7 +22,7 @@ module.exports = ({ strapi }) => ({
   async findOne(request) {
     const { id } = request.query;
     return await strapi.entityService.findOne(plugin, id, {
-      fields: ["id", "name", "color"],
+      fields: fields,
       filters: {
         publishedAt: {
           $notNull: true, // 仅查询已发布的条目

@@ -15,7 +15,8 @@ const CustomOption = (props) => {
       <div
         className="custom-tag"
         style={{
-          backgroundColor: data.color,
+          color: data.textColor,
+          backgroundColor: data.bgColor,
         }}
       >
         {data.name}
@@ -61,31 +62,22 @@ const TagSelector = ({ onChange, value, name, description }) => {
     onChange({ target: { name, value: JSON.stringify(selectedIds) } });
   };
 
-  // useEffect(() => {
-  //   const childElementList = document.querySelectorAll(".custom-multi-select");
-  //   childElementList.forEach((childElement) => {
-  //     const parentElement = childElement.parentNode;
-  //     if (parentElement) {
-  //       // @ts-ignore
-  //       // parentElement.style.gridColumnStart = "span 6";
-  //     }
-  //   });
-  // }, []);
-
   // 格式化标签为 react-select 所需的选项格式
   const tagOptions = tags.map((tag) => ({
     value: tag.id,
-    color: tag.color,
+    textColor: tag.textColor,
+    bgColor: tag.bgColor,
     name: tag.name,
     label: (
-      <div
-        className="selected-tag"
-        style={{
-          backgroundColor: tag.color,
-        }}
-      >
-        {tag.name}
-      </div>
+        <div
+            className="selected-tag"
+            style={{
+              color: tag.textColor,
+              backgroundColor: tag.bgColor,
+            }}
+        >
+          {tag.name}
+        </div>
     ),
   }));
 
