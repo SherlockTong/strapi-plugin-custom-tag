@@ -51,9 +51,9 @@ To use the tag we created, we can add a field in the Content Type Builder and se
 
 ## Restful API
 
-You can query the list of tags and fuzzy matching tag names, and when you don't add a name query, you can query all published tags.
+You can query all tag lists, or match accurately based on content type and fuzzy match based on tag name, both conditions can be used alone or in combination.
 
-`GET    /custom-tag/list?name=keyword`
+`GET    /custom-tag/list?contentType=your-content-type&name=keyword`
 
 You can also query the specified tag information by id.
 

@@ -5,34 +5,41 @@ import pluginId from "../../pluginId";
 import Select from "react-select"; // 导入 react-select
 import "../../global.css"; // 导入你的全局样式
 import { Flex } from "@strapi/design-system";
+import { useCMEditViewDataManager } from "@strapi/helper-plugin";
 
 // 自定义勾选框样式的 Option 组件
 const CustomOption = (props) => {
   const { data, innerRef, innerProps } = props;
-  console.log(props);
+
   return (
-    <div ref={innerRef} {...innerProps} className="custom-option">
-      <div
-        className="custom-tag"
-        style={{
-          color: data.textColor,
-          backgroundColor: data.bgColor,
-        }}
-      >
-        {data.name}
+      <div ref={innerRef} {...innerProps} className="custom-option">
+        <div
+            className="custom-tag"
+            style={{
+              color: data.textColor,
+              backgroundColor: data.bgColor,
+            }}
+        >
+          {data.name}
+        </div>
       </div>
-    </div>
   );
 };
 const TagSelector = ({ onChange, value, name, description }) => {
   const [tags, setTags] = useState([]); // 所有可用的标签
   const { get } = useFetchClient(); // 使用 Strapi 的 HTTP 客户端
+  const { layout } = useCMEditViewDataManager();
+
+  // @ts-ignore
+  const contentType = layout?.apiID || "Unknown";
 
   // 从后端加载标签
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const { data } = await get(`/${pluginId}/list`); // 获取标签数据
+        const { data } = await get(
+            `/${pluginId}/list?contentType=${contentType}`
+        ); // 获取标签数据
         setTags(data);
       } catch (err) {
         console.error("Failed to fetch tags:", err);
@@ -56,8 +63,8 @@ const TagSelector = ({ onChange, value, name, description }) => {
   // 处理标签选择变化
   const handleSelectChange = (selectedOptions) => {
     const selectedIds = selectedOptions
-      ? selectedOptions.map((option) => option.value)
-      : [];
+        ? selectedOptions.map((option) => option.value)
+        : [];
     setSelectedTags(selectedIds);
     onChange({ target: { name, value: JSON.stringify(selectedIds) } });
   };
@@ -65,14 +72,14 @@ const TagSelector = ({ onChange, value, name, description }) => {
   // 格式化标签为 react-select 所需的选项格式
   const tagOptions = tags.map((tag) => ({
     value: tag.id,
-    textColor: tag.textColor,
+    textColor: tag.textColor || "black",
     bgColor: tag.bgColor,
     name: tag.name,
     label: (
         <div
             className="selected-tag"
             style={{
-              color: tag.textColor,
+              color: tag.textColor || "black",
               backgroundColor: tag.bgColor,
             }}
         >
@@ -89,47 +96,47 @@ const TagSelector = ({ onChange, value, name, description }) => {
   };
 
   return (
-    <Flex
-      className="custom-multi-select"
-      direction="column"
-      gap={1}
-      alignItems="stretch"
-    >
-      <label>{name}</label>
-      <Select
-        isMulti // 启用多选
-        options={tagOptions} // 提供选项
-        value={selectedTags.map((id) =>
-          tagOptions.find((option) => option.value === id)
-        )}
-        onChange={handleSelectChange}
-        placeholder="Select tags"
-        filterOption={filterOption} // 使用自定义的模糊搜索过滤函数
-        // menuIsOpen={true} // 保持下拉框打开
-        components={{
-          Option: CustomOption, // 使用自定义的 Option 组件
-        }}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            minHeight: "40px",
-            borderColor: "#DCDCE4",
-            fontSize: "0.875rem",
-          }),
-          multiValue: (provided) => ({
-            ...provided,
-            borderRadius: "25px",
-            height: "30px", //
-            margin: "2px 5px",
-          }),
-          menu: (provided) => ({
-            ...provided,
-            zIndex: 9999, // 确保下拉菜单本身在顶部
-          }),
-        }}
-      />
-      {description && <div className="hint">{description}</div>}
-    </Flex>
+      <Flex
+          className="custom-multi-select"
+          direction="column"
+          gap={1}
+          alignItems="stretch"
+      >
+        <label>{name}</label>
+        <Select
+            isMulti // 启用多选
+            options={tagOptions} // 提供选项
+            value={selectedTags.map((id) =>
+                tagOptions.find((option) => option.value === id)
+            )}
+            onChange={handleSelectChange}
+            placeholder="Select tags"
+            filterOption={filterOption} // 使用自定义的模糊搜索过滤函数
+            // menuIsOpen={true} // 保持下拉框打开
+            components={{
+              Option: CustomOption, // 使用自定义的 Option 组件
+            }}
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                minHeight: "40px",
+                borderColor: "#DCDCE4",
+                fontSize: "0.875rem",
+              }),
+              multiValue: (provided) => ({
+                ...provided,
+                borderRadius: "25px",
+                height: "30px", //
+                margin: "2px 5px",
+              }),
+              menu: (provided) => ({
+                ...provided,
+                zIndex: 9999, // 确保下拉菜单本身在顶部
+              }),
+            }}
+        />
+        {description && <div className="hint">{description}</div>}
+      </Flex>
   );
 };
 

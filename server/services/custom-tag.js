@@ -4,12 +4,13 @@ const plugin = "plugin::custom-tag.custom-tag";
 const fields = ["id", "name", "textColor", "bgColor"];
 module.exports = ({ strapi }) => ({
   async findList(request) {
-    const { name } = request.query;
+    const { name, contentType } = request.query;
 
     // 构建查询参数
     const filters = {
       publishedAt: { $notNull: true },
       ...(name && { name: { $contains: name } }), // 如果 name 存在，添加 name 的过滤条件
+      ...(contentType && { contentType: { $eq: contentType } }), // 如果 contentType 存在，添加 contentType 的过滤条件
     };
 
     return await strapi.entityService.findMany(plugin, {
